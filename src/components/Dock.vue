@@ -136,7 +136,7 @@ const el = ref()
 useDraggable(el, bookmarkList, {
   animation: 150,
   ghostClass: 'ghost',
-  delay: 50,
+  // delay: 50,
   onStart() {},
   onUpdate() {
     saveUserBookmarkList()
