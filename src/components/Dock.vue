@@ -230,10 +230,12 @@ const uploadImage = async () => {
     if (res.code >= 200 && res.code < 300) {
       isUploading.value = false
       bookmarkInfo.imgUrl = res.data.imagePath
+      message.success('图标上传成功!')
     }
   } catch (error) {
     console.error('Upload Error:', error)
     isUploading.value = false
+    message.error('图标上传失败，请重试')
   }
   imgInputRef.value!.value = ''
 }
