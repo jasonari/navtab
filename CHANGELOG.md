@@ -2,6 +2,18 @@
 
 
 
+## [0.4.0](https://github.com/JasonAri/navtab/compare/v0.3.0...v0.4.0) (2025-02-12)
+
+
+### Features
+
+* remove delay for dragging icon ([5ec8737](https://github.com/JasonAri/navtab/commit/5ec8737a620f83fa6c452a446b7dd47413127e90))
+
+
+### Bug Fixes
+
+* feedback for the upload icon result ([4ab80f8](https://github.com/JasonAri/navtab/commit/4ab80f825392c082b80c11e1752bb6aa081fe6e5))
+
 ## [0.3.0](https://github.com/JasonAri/navtab/compare/v0.2.0...v0.3.0) (2024-11-10)
 
 
