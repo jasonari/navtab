@@ -33,7 +33,8 @@ import { CloseCircleFilled } from '@ant-design/icons-vue'
 let searchValue = ref<string>('')
 
 function search() {
-  window.location.href = 'https://cn.bing.com/search?q=' + searchValue.value
+  window.location.href =
+    'https://cn.bing.com/search?q=' + searchValue.value + '&form=QBRE'
 }
 
 function clearInput() {
