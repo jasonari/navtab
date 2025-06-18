@@ -1,20 +1,25 @@
 {
   "printWidth": 80,
   "tabWidth": 2,
+  "useTabs": false,
   "semi": false,
   "singleQuote": true,
   "quoteProps": "as-needed",
-  "jsxBracketSameLine": false,
+  "jsxSingleQuote": false,
   "trailingComma": "none",
   "bracketSpacing": true,
-  "bracketLine": false,
+  "objectWrap": "preserve",
+  "bracketSameLine": false,
   "arrowParens": "always",
+  "htmlWhitespaceSensitivity": "css",
+  "vueIndentScriptAndStyle": false,
   "endOfLine": "lf",
+  "embeddedLanguageFormatting": "auto",
+  "singleAttributePerLine": false,
   "overrides": [
     {
       "files": ".prettierrc",
       "options": { "parser": "json" }
     }
-  ],
-  "htmlWhitespaceSensitivity": "ignore"
+  ]
 }
