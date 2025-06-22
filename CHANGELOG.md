@@ -1,23 +1,19 @@
-# Changelog 
+## Changelog 
 
 
+### [0.4.0](https://github.com/JasonAri/navtab/compare/v0.3.0...v0.4.0) (2025-02-12)
 
-## [0.4.0](https://github.com/JasonAri/navtab/compare/v0.3.0...v0.4.0) (2025-02-12)
-
-
-### Features
+#### Features
 
 * remove delay for dragging icon ([5ec8737](https://github.com/JasonAri/navtab/commit/5ec8737a620f83fa6c452a446b7dd47413127e90))
 
-
-### Bug Fixes
+#### Bug Fixes
 
 * feedback for the upload icon result ([4ab80f8](https://github.com/JasonAri/navtab/commit/4ab80f825392c082b80c11e1752bb6aa081fe6e5))
 
-## [0.3.0](https://github.com/JasonAri/navtab/compare/v0.2.0...v0.3.0) (2024-11-10)
+### [0.3.0](https://github.com/JasonAri/navtab/compare/v0.2.0...v0.3.0) (2024-11-10)
 
-
-### Features
+#### Features
 
 * add 404 page ([251b80b](https://github.com/JasonAri/navtab/commit/251b80b917fc55864b73354de4d8a3135d80ae2c))
 * add bookmark context menu btn ([aa4ef0d](https://github.com/JasonAri/navtab/commit/aa4ef0d6d8b9145879a2f6a1e14e4ca0230c3a6a))
@@ -46,8 +42,7 @@
 * dynamically fetching bookmark list ([6a01cb1](https://github.com/JasonAri/navtab/commit/6a01cb155785e4c767055b0913bad8d611268077))
 * support upload favicon ([4dd6b88](https://github.com/JasonAri/navtab/commit/4dd6b8872dfa3a37ed35b8ed32ef20ee69d9ac38))
 
-
-### Bug Fixes
+#### Bug Fixes
 
 * blank dock issue caused by token expiration ([72accd0](https://github.com/JasonAri/navtab/commit/72accd007c6355d456d05923920460622ddc8964))
 * context menu issue ([f2e7dd1](https://github.com/JasonAri/navtab/commit/f2e7dd1e63a397b4ee2e3dc51a85b17049959abd))
@@ -59,17 +54,15 @@
 * resolve empty data caused by wrong request ([2012ddb](https://github.com/JasonAri/navtab/commit/2012ddb4601c559765ceb29ac813e1585d88a8a0))
 * resolve issue of unintended modification in store ([d277c58](https://github.com/JasonAri/navtab/commit/d277c58b35e4492d625f745b7e6abd1120c86436))
 
-## [0.2.0](https://github.com/JasonAri/navtab/compare/v0.1.0...v0.2.0) (2024-07-22)
+### [0.2.0](https://github.com/JasonAri/navtab/compare/v0.1.0...v0.2.0) (2024-07-22)
 
-
-### Features
+#### Features
 
 * add tooltip for hovering the icon ([04bb139](https://github.com/JasonAri/navtab/commit/04bb1390b98297b427ff1c55c194c928694e50bd))
 
-## 0.1.0 (2024-07-16)
+### 0.1.0 (2024-07-16)
 
-
-### Features
+#### Features
 
 * add nav bar function ([5244437](https://github.com/JasonAri/navtab/commit/5244437e8a6505d6eb43bc48bc2b4813aea2ac74))
 * add search bar structure ([f3704dd](https://github.com/JasonAri/navtab/commit/f3704dd9729bac3c845521ca0e40e0c66725f028))
@@ -77,7 +70,6 @@
 * add static web structure ([f369f94](https://github.com/JasonAri/navtab/commit/f369f94fb6454df97400bf29a0206ce651a0d2eb))
 * init app ([b4ed2be](https://github.com/JasonAri/navtab/commit/b4ed2bea61869f25bbb47b4ce44152f42b4702b2))
 
-
-### Bug Fixes
+#### Bug Fixes
 
 * background image ([481f184](https://github.com/JasonAri/navtab/commit/481f184cc66e64b21458120b62cf2b0c20614cd3))
