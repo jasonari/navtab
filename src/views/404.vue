@@ -15,7 +15,7 @@ import { Result, Button } from 'ant-design-vue'
 </script>
 
 <style scoped lang="scss">
-.container{
+.container {
   height: 100vh;
   display: flex;
   justify-content: center;

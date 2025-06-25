@@ -1,0 +1,6 @@
+dist/
+coverage/
+*.lock
+
+src/assets/styles/reset.css
+src/assets/styles/global.css

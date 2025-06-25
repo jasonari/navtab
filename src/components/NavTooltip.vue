@@ -9,8 +9,8 @@ import { Tooltip } from 'ant-design-vue'
 defineProps({
   title: {
     type: String,
-    required: true,
-  },
+    required: true
+  }
 })
 </script>
 
@@ -18,6 +18,7 @@ defineProps({
 .ant-tooltip-inner {
   color: #2d2e2e !important;
   font-size: 13px;
-  font-family: 'PingFang SC', 'HarmonyOS Sans SC', 'Microsoft YaHei', sans-serif;
+  font-family:
+    'PingFang SC', 'HarmonyOS Sans SC', 'Microsoft YaHei', sans-serif;
 }
 </style>

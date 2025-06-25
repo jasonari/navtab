@@ -90,8 +90,16 @@ let handleInputBlur = () => {
     color: #526071;
     font-size: 16px;
     line-height: 28px;
-    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-      'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-family:
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      'Helvetica Neue',
+      Arial,
+      sans-serif;
     border: 0;
     outline: none;
     background: rgba(0, 0, 0, 0);

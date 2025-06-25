@@ -1,8 +1,6 @@
 import { ref, onMounted, onUnmounted, Ref } from 'vue'
 
-export default function (
-  containerRef: Ref<HTMLElement | null>,
-) {
+export default function (containerRef: Ref<HTMLElement | null>) {
   const x = ref(0)
   const y = ref(0)
   const visible = ref(false)
