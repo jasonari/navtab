@@ -1,1 +1,1 @@
-npm run prettier:check
+npx lint-staged
