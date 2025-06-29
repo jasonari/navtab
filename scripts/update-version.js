@@ -26,7 +26,7 @@ function getVersionBumpType() {
     const commits = execSync(commitCommand, { encoding: 'utf8' }).trim()
 
     if (!commits) {
-      console.log('No new commits found. Skipping version bump.')
+      console.log('No new commits found. Skipping version bump...')
       process.exit(0)
     }
 
@@ -81,7 +81,6 @@ async function updatePackageJson(version) {
     fs.writeFileSync(packagePath, JSON.stringify(packageJson, null, 2) + '\n', {
       encoding: 'utf8'
     })
-    console.log(`Update package version to: ${version}`)
   } catch (error) {
     console.error('Failed to update package version:', error.message)
     process.exit(1)
@@ -95,11 +94,7 @@ async function main() {
 
   await updatePackageJson(newVersion)
 
-  if (process.env.GITHUB_OUTPUT) {
-    fs.appendFileSync(process.env.GITHUB_OUTPUT, `new_version=${newVersion}\n`)
-  } else {
-    console.log(`New version: ${newVersion}`)
-  }
+  console.log(`✨ Successfully updated version to v${newVersion}`)
 }
 
 main().catch((error) => {

@@ -11,7 +11,7 @@
     "prettier:check": "prettier --check .",
     "prepare": "husky",
     "update:changelog": "node scripts/update-changelog.js",
-    "update:version": "node scripts/version-bump.js"
+    "update:version": "node scripts/update-version.js"
   },
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",

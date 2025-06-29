@@ -33,31 +33,29 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Bump version and create tag
-        id: bump_version
+      - name: Update package version
         run: |
           pnpm update:version
-
           NEW_VERSION=$(node -p "require('./package.json').version")
-
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-          git tag -a v$NEW_VERSION -m "chore: release v$NEW_VERSION"
-          git push origin v$NEW_VERSION
-
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
       - name: Update changelog
         run: |
           pnpm update:changelog
 
-          git add CHANGELOG.md
-          git commit -m "chore: update changelog for v$NEW_VERSION"
-          git push origin test
+      - name: Commit & Tag
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
+          git add package.json pnpm-lock.yaml CHANGELOG.md
+          git commit -m "chore: release v${{ env.NEW_VERSION }}"
+          git tag -a v${{ env.NEW_VERSION }} -m "chore: tag v${{ env.NEW_VERSION }}"
+          git push origin HEAD v${{ env.NEW_VERSION }}
 
       - name: Extract current version changelog
         run: |
-          VERSION="v$NEW_VERSION"
+          VERSION="v${{ env.NEW_VERSION }}"
           awk "/^### $VERSION/{flag=1; next} /^### /{flag=0} flag" CHANGELOG.md > .RELEASE_NOTES.md
 
       - name: Create GitHub release
@@ -68,5 +66,5 @@ jobs:
           tag_name: v${{ env.NEW_VERSION }}
           release_name: v${{ env.NEW_VERSION }}
           body_path: .RELEASE_NOTES.md
-          draft: true
+          draft: false
           prerelease: false
