@@ -1,5 +1,7 @@
 ## Changelog
 
+### [0.4.1](https://github.com/jasonari/navtab/compare/v0.5.0...v0.4.1) (2025-06-29)
+
 ### [0.5.0](https://github.com/JasonAri/navtab/compare/v0.4.0...v0.5.0) (2025-06-29)
 
 #### Features
