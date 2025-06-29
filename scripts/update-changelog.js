@@ -116,7 +116,7 @@ function groupCommits(parsedCommits) {
 }
 
 function generateChangelog(versionInfo, groupedCommits) {
-  let changelogContent = '## Changelog\n\n'
+  let changelogContent = ''
 
   changelogContent += versionInfo.compareUrl
     ? `### [${versionInfo.version}](${versionInfo.compareUrl}) (${versionInfo.date})\n\n`
@@ -146,7 +146,11 @@ function generateChangelog(versionInfo, groupedCommits) {
     changelogContent += '\n'
   }
 
-  return changelogContent
+  fs.writeFileSync('.RELEASE_NOTES.md', changelogContent, 'utf8')
+
+  const changelog = '## Changelog\n\n' + changelogContent
+
+  return changelog
 }
 
 function writeChangelog(changelog) {
