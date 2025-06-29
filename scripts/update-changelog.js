@@ -2,14 +2,15 @@
 import fs from 'fs'
 import { execSync } from 'child_process'
 
+const owner = process.env.REPO_OWNER || 'jasonari'
+const name = process.env.REPO_NAME || 'navtab'
+
 const CONFIG = {
-  types: {
-    feat: { title: 'Features' },
-    fix: { title: 'Bug Fixes' }
-  },
+  types: { feat: { title: 'Features' }, fix: { title: 'Bug Fixes' } },
   repo: {
-    owner: 'JasonAri',
-    name: 'navtab'
+    owner,
+    name,
+    repoUrl: `https://github.com/${owner}/${name}`
   }
 }
 
@@ -163,7 +164,11 @@ function generateChangelog(versionInfo, groupedCommits) {
 
     // subjects
     groupedCommits[type].map((commit) => {
-      changelogContent += `- ${commit}\n`
+      const replaced = commit.replace(/\(#(\d+)\)|#(\d+)/g, (_, pr1, pr2) => {
+        const prNumber = pr1 || pr2
+        return `([#${prNumber}](${CONFIG.repo.repoUrl}/pull/${prNumber}))`
+      })
+      changelogContent += `- ${replaced}\n`
     })
 
     // add newline
