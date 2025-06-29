@@ -10,7 +10,8 @@
     "prettier": "prettier --write .",
     "prettier:check": "prettier --check .",
     "prepare": "husky",
-    "changelog": "node scripts/update-changelog.js"
+    "update:changelog": "node scripts/update-changelog.js",
+    "update:version": "node scripts/version-bump.js"
   },
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",
