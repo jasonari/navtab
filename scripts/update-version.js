@@ -27,7 +27,7 @@ function getVersionBumpType() {
     const commits = execSync(commitCommand, { encoding: 'utf8' }).trim()
 
     if (!commits) {
-      console.log('No new commits found. Skipping version bump...')
+      console.log('🫠  No new commits found. Skipping version bump...')
       process.exit(0)
     }
 
@@ -50,7 +50,7 @@ function getVersionBumpType() {
       return 'patch'
     }
 
-    console.log('🫠 No version bump required.')
+    console.log('🫠  No version bump required.')
     process.exit(0)
   } catch (error) {
     console.error('Failed to get commits:', error.message)
