@@ -1,3 +1,4 @@
+// update-version.js
 import fs from 'fs'
 import path from 'path'
 import { execSync } from 'child_process'
@@ -49,7 +50,8 @@ function getVersionBumpType() {
       return 'patch'
     }
 
-    return 'patch'
+    console.log('🫠 No version bump required.')
+    process.exit(0)
   } catch (error) {
     console.error('Failed to get commits:', error.message)
     process.exit(1)
