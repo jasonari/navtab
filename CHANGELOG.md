@@ -1,17 +1,5 @@
 ## Changelog
 
-### [0.5.0](https://github.com/jasonari/navtab/compare/v0.4.0...v0.5.0) (2025-06-29)
-
-#### Features
-
-- update-changelog ([#6](https://github.com/jasonari/navtab/pull/6))
-- add version-bump script ([#2](https://github.com/jasonari/navtab/pull/2))
-- add new favicon
-
-#### Bug Fixes
-
-- blank Bing search results
-
 ### [0.4.0](https://github.com/JasonAri/navtab/compare/v0.3.0...v0.4.0) (2025-02-12)
 
 #### Features
