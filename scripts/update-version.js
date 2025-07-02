@@ -5,11 +5,16 @@ import { execSync } from 'child_process'
 
 function getCurrentVersion() {
   try {
-    const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'))
+    const packagePath = path.join(process.cwd(), 'package.json')
+    const packageJson = JSON.parse(fs.readFileSync(packagePath, 'utf8'))
+
+    if (!packageJson.version) {
+      throw new Error('Missing "version" field in package.json')
+    }
+
     return packageJson.version
   } catch (error) {
-    console.error('Failed to get current version:', error.message)
-    process.exit(1)
+    throw new Error(`Failed to get current version: ${error.message}`)
   }
 }
 
@@ -27,8 +32,7 @@ function getVersionBumpType() {
     const commits = execSync(commitCommand, { encoding: 'utf8' }).trim()
 
     if (!commits) {
-      console.log('🫠  No new commits found. Skipping version bump...')
-      process.exit(0)
+      return null
     }
 
     const commitLines = commits.split('\n\n')
@@ -50,11 +54,9 @@ function getVersionBumpType() {
       return 'patch'
     }
 
-    console.log('🫠  No version bump required.')
-    process.exit(0)
+    return null
   } catch (error) {
-    console.error('Failed to get commits:', error.message)
-    process.exit(1)
+    throw new Error(`Failed to analyze commits: ${error.message}`)
   }
 }
 
@@ -69,8 +71,7 @@ function incrementVersion(currentVersion, bumpType) {
     case 'patch':
       return `${major}.${minor}.${patch + 1}`
     default:
-      console.error('Unknown bump version type:', bumpType)
-      process.exit(1)
+      throw new Error(`Unknown bump version type: ${bumpType}`)
   }
 }
 
@@ -84,16 +85,20 @@ async function updatePackageJson(version) {
       encoding: 'utf8'
     })
   } catch (error) {
-    console.error('Failed to update package version:', error.message)
-    process.exit(1)
+    throw new Error(`Failed to update package version: ${error.message}`)
   }
 }
 
 async function main() {
   const currentVersion = getCurrentVersion()
   const bumpType = getVersionBumpType()
-  const newVersion = incrementVersion(currentVersion, bumpType)
 
+  if (!bumpType) {
+    console.log('🫠  No new commits or version bump required. Skipping...')
+    process.exit(0)
+  }
+
+  const newVersion = incrementVersion(currentVersion, bumpType)
   await updatePackageJson(newVersion)
 
   console.log(`✨ Successfully updated version to v${newVersion}`)
