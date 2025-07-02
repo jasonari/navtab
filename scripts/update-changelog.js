@@ -1,5 +1,6 @@
 // update-changelog.js
 import fs from 'fs'
+import path from 'path'
 import { execSync } from 'child_process'
 
 const owner = process.env.REPO_OWNER || 'jasonari'
@@ -19,25 +20,27 @@ const CONFIG = {
 
 function getLastTag() {
   try {
-    const tags = execSync('git tag --sort=-creatordate')
-      .toString()
+    const tags = execSync('git tag --sort=-creatordate', {
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore']
+    })
       .trim()
       .split('\n')
       .filter(Boolean)
 
     if (tags.length === 0) {
-      console.warn('⚠️ No tags found in the repository.')
       return null
     }
 
     return tags[0]
   } catch (error) {
-    console.warn('⚠️ Failed to get git tags:', error.message || error)
-    return null
+    throw new Error(`Failed to get git tags: ${error.message}`)
   }
 }
 
 function parseVersionParts(v) {
+  if (!v) return [0, 0, 0]
+
   return v
     .replace(/^v/, '')
     .split('.')
@@ -45,6 +48,8 @@ function parseVersionParts(v) {
 }
 
 function compareVersion(version, lastTag) {
+  if (!lastTag) return true
+
   const [major1, minor1, patch1] = parseVersionParts(version)
   const [major2, minor2, patch2] = parseVersionParts(lastTag)
 
@@ -54,21 +59,23 @@ function compareVersion(version, lastTag) {
     (major1 === major2 && minor1 === minor2 && patch1 > patch2)
 
   if (!isVersionGreater) {
-    console.error(
-      `❌ Version "${version}" is not greater than last tag "${lastTag}".`
+    throw new Error(
+      `Version "${version}" is not greater than last tag "${lastTag}"`
     )
-    process.exit(1)
   }
+
+  return true
 }
 
 function getVersionInfo(version, lastTag) {
   const normalizedVersion = version.replace(/^v/, '')
-  const hasVPrefix = lastTag && /^v/.test(lastTag)
-  const newTag = hasVPrefix ? `v${normalizedVersion}` : normalizedVersion
+  let compareUrl = null
 
-  const compareUrl = lastTag
-    ? `${CONFIG.repo.repoUrl}/compare/${lastTag}...${newTag}`
-    : null
+  if (lastTag) {
+    const hasVPrefix = /^v/.test(lastTag)
+    const newTag = hasVPrefix ? `v${normalizedVersion}` : normalizedVersion
+    compareUrl = `${CONFIG.repo.repoUrl}/compare/${lastTag}...${newTag}`
+  }
 
   return {
     version: normalizedVersion,
@@ -79,13 +86,14 @@ function getVersionInfo(version, lastTag) {
 
 function getCommits(lastTag) {
   try {
-    const range = lastTag ? `${lastTag}..HEAD` : ''
-    const command = `git log ${range} --pretty=format:"%s%b"`
-    const output = execSync(command).toString().trim()
+    const command = lastTag
+      ? `git log ${lastTag}..HEAD --pretty=format:"%s %b"`
+      : `git log --pretty=format:"%s %b"`
+
+    const output = execSync(command, { encoding: 'utf8' }).trim()
     return output.split('\n').filter(Boolean)
   } catch (error) {
-    console.error('❌ Failed to get git logs:', error.message)
-    process.exit(1)
+    throw new Error(`Failed to get git logs: ${error.message}`)
   }
 }
 
@@ -104,13 +112,14 @@ function parseCommits(commits) {
 function groupCommits(parsedCommits) {
   const groupedCommits = Object.keys(CONFIG.types).reduce((acc, key) => {
     acc[key] = []
-    parsedCommits.forEach((commit) => {
-      if (commit.type === key && commit.subject) {
-        acc[key].push(commit.subject)
-      }
-    })
     return acc
   }, {})
+
+  parsedCommits.forEach((commit) => {
+    if (CONFIG.types[commit.type] && commit.subject) {
+      groupedCommits[commit.type].push(commit.subject)
+    }
+  })
 
   return groupedCommits
 }
@@ -125,8 +134,9 @@ function generateChangelog(versionInfo, groupedCommits) {
   const hasContent = Object.values(groupedCommits).some((arr) => arr.length > 0)
 
   if (!hasContent) {
-    changelogContent += '- Initial release.\n\n'
-    return changelogContent
+    changelogContent +=
+      '- No significant changes (initial release or maintenance update).\n\n'
+    return { full: changelogContent, releaseNotes: changelogContent }
   }
 
   for (const type of Object.keys(groupedCommits)) {
@@ -149,49 +159,61 @@ function generateChangelog(versionInfo, groupedCommits) {
   const releaseNotes = changelogContent
     .replace(/^## Changelog\n+/, '')
     .replace(/^###\s.*\n+/, '')
-  fs.writeFileSync('.RELEASE_NOTES.md', releaseNotes, 'utf8')
 
-  return changelogContent
+  return { full: changelogContent, releaseNotes }
 }
 
 function writeChangelog(changelog) {
   try {
+    const changelogPath = path.join(process.cwd(), 'CHANGELOG.md')
+    const releaseNotesPath = path.join(process.cwd(), '.RELEASE_NOTES.md')
+
     let content = ''
-    if (!fs.existsSync('CHANGELOG.md')) {
-      content = changelog
+
+    if (!fs.existsSync(changelogPath)) {
+      content = changelog.full
     } else {
-      const existingContent = fs.readFileSync('CHANGELOG.md', 'utf8')
+      const existingContent = fs.readFileSync(changelogPath, 'utf8')
       if (existingContent.includes('## Changelog\n\n')) {
-        content = existingContent.replace('## Changelog\n\n', changelog)
+        content = existingContent.replace('## Changelog\n\n', changelog.full)
       } else {
-        content = changelog + existingContent
+        content = changelog.full + existingContent
       }
     }
 
-    fs.writeFileSync('CHANGELOG.md', content, 'utf8')
+    fs.writeFileSync(changelogPath, content, 'utf8')
+    fs.writeFileSync(releaseNotesPath, changelog.releaseNotes, 'utf8')
   } catch (error) {
-    console.error('❌ Failed to write changelog:', error)
-    process.exit(1)
+    throw new Error(`Failed to write changelog: ${error.message}`)
   }
 }
 
 function main() {
-  const version = JSON.parse(fs.readFileSync('package.json', 'utf8')).version
-  const lastTag = getLastTag()
+  try {
+    const packagePath = path.join(process.cwd(), 'package.json')
+    const packageJson = JSON.parse(fs.readFileSync(packagePath, 'utf8'))
+    const version = packageJson.version
 
-  if (lastTag) {
+    if (!version) {
+      throw new Error('Missing "version" field in package.json')
+    }
+
+    const lastTag = getLastTag()
     compareVersion(version, lastTag)
+
+    const versionInfo = getVersionInfo(version, lastTag)
+    const commits = getCommits(lastTag)
+    const parsedCommits = parseCommits(commits)
+    const groupedCommits = groupCommits(parsedCommits)
+    const changelog = generateChangelog(versionInfo, groupedCommits)
+
+    writeChangelog(changelog)
+
+    console.log('✨ Successfully updated CHANGELOG.md')
+  } catch (error) {
+    console.error(`❌ ${error.message}`)
+    process.exit(1)
   }
-
-  const versionInfo = getVersionInfo(version, lastTag)
-  const commits = getCommits(lastTag)
-  const parsedCommits = parseCommits(commits)
-  const groupedCommits = groupCommits(parsedCommits)
-  const changelog = generateChangelog(versionInfo, groupedCommits)
-
-  writeChangelog(changelog)
-
-  console.log('✨ Successfully updated CHANGELOG.md')
 }
 
 main()
