@@ -9,9 +9,7 @@
     "preview": "vite preview",
     "prettier": "prettier --write .",
     "prettier:check": "prettier --check .",
-    "prepare": "husky",
-    "update:changelog": "node scripts/update-changelog.js",
-    "update:version": "node scripts/update-version.js"
+    "prepare": "husky"
   },
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",
