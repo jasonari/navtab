@@ -1,26 +1,46 @@
 <template>
-  <div class="login-bg">
-    <div class="login-container">
-      <RouterLink to="/"><CloseOutlined class="close-icon" /></RouterLink>
-      <div class="left-box">
-        <div class="login-title">登录</div>
-        <Form class="login-form">
-          <FormItem class="username-box" name="username">
-            <span class="text-tips">用户名</span>
-            <Input class="form-input" v-model:value="formState.username" />
-            <div class="div-line"></div>
+  <div
+    class="relative h-screen overflow-hidden bg-cover"
+    style="background-image: url('/images/bg.jpg')"
+  >
+    <div
+      class="absolute top-1/2 left-1/2 z-[100] h-[450px] w-[800px] rounded-xl bg-cover bg-center bg-no-repeat"
+      style="
+        background-image: url('/images/user-login-bg.png');
+        transform: translate(-50%, -50%);
+      "
+    >
+      <RouterLink to="/">
+        <CloseOutlined class="absolute top-5 right-5 text-[#928cb1]" />
+      </RouterLink>
+      <div
+        class="flex h-[450px] w-[465px] flex-col items-center justify-between"
+      >
+        <div class="mt-[50px] text-center text-2xl font-bold text-[#928cb1]">
+          登录
+        </div>
+        <Form
+          class="mt-[30px] flex w-[300px] flex-col items-center justify-center"
+        >
+          <FormItem class="mt-[15px] w-full" name="username">
+            <span class="text-sm font-medium text-[#9c9c9c]">用户名</span>
+            <Input
+              class="border-none shadow-none"
+              v-model:value="formState.username"
+            />
+            <div class="border-b border-[#cfcfcf]"></div>
           </FormItem>
-          <FormItem class="password-box" name="password">
-            <span class="text-tips">密码</span>
+          <FormItem class="mt-[15px] w-full" name="password">
+            <span class="text-sm font-medium text-[#9c9c9c]">密码</span>
             <InputPassword
-              class="form-input"
+              class="border-none shadow-none"
               v-model:value="formState.password"
             />
-            <div class="div-line"></div>
+            <div class="border-b border-[#cfcfcf]"></div>
           </FormItem>
-          <FormItem class="btn-box">
+          <FormItem class="mt-[30px] w-full">
             <Button
-              class="btn"
+              class="w-[250px] bg-[#a9a2cc] text-base leading-4 text-white hover:bg-[#7e7999] active:bg-[#545065]"
               type="text"
               @click="handleLoginBtn"
               :loading="loginBtnLoading"
@@ -29,12 +49,16 @@
             </Button>
           </FormItem>
         </Form>
-        <div class="register">
-          <router-link to="/register">没有账号？去注册</router-link>
+        <div class="mb-[50px] text-center">
+          <router-link to="/register" class="text-sm text-[#9c9c9c]"
+            >没有账号？去注册</router-link
+          >
         </div>
       </div>
     </div>
-    <div class="overlay"></div>
+    <div
+      class="absolute z-[99] h-full w-full bg-black/50 backdrop-blur-lg"
+    ></div>
   </div>
 </template>
 
@@ -101,7 +125,7 @@ const loginRequest = async () => {
 }
 </script>
 
-<style scoped lang="scss">
+<!-- <style scoped lang="scss">
 .login-bg {
   height: 100vh;
   overflow: hidden;
@@ -200,4 +224,4 @@ const loginRequest = async () => {
   background: rgba(0, 0, 0, 0.5);
   z-index: 99;
 }
-</style>
+</style> -->
