@@ -37,7 +37,7 @@ async function needUpdate() {
   return result
 }
 
-const DURATION = 5000
+const DURATION = 10 * 60 * 1000
 function autoRefresh() {
   setTimeout(async () => {
     const result = await needUpdate()
