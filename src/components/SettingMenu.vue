@@ -42,15 +42,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { SettingFilled } from '@ant-design/icons-vue'
 import { useBookmarkStore } from '../store/bookmark'
 import { getAccessToken, removeTokens } from '../utils/tools'
 
 const isShowMenu = ref(false)
-const isClickOutsite = ref(false)
-const settingLogoRef = ref(null)
-const settingMenuRef = ref(null)
+const settingLogoRef = ref<HTMLElement | null>(null)
+const settingMenuRef = ref<HTMLElement | null>(null)
 const isLogin = ref(false)
 
 const bookmarkStore = useBookmarkStore()
@@ -66,25 +65,25 @@ const handleLogout = () => {
 }
 const handleClick = (e: MouseEvent) => {
   if (isShowMenu.value) {
+    const logoEl = settingLogoRef.value
+    const menuEl = settingMenuRef.value
     if (
-      !settingLogoRef.value.contains(e.target as HTMLElement) &&
-      !settingMenuRef.value.contains(e.target as HTMLElement)
+      logoEl &&
+      menuEl &&
+      !logoEl.contains(e.target as HTMLElement) &&
+      !menuEl.contains(e.target as HTMLElement)
     ) {
       handleSettingBtn()
     }
   }
 }
 
-watch(isClickOutsite, () => {
-  // console.log("🚀 ~ watch ~ isClickOutsite:", isClickOutsite)
-})
 onMounted(() => {
   if (getAccessToken()) {
     isLogin.value = true
   }
   document.addEventListener('click', handleClick)
 })
-
 onBeforeUnmount(() => {
   document.removeEventListener('click', handleClick)
 })
