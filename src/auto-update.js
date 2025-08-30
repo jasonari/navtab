@@ -18,7 +18,7 @@ async function extractNewScripts() {
 
 async function needUpdate() {
   const newScripts = await extractNewScripts()
-  if (!lastSrcs) {
+  if (lastSrcs.length === 0) {
     lastSrcs = newScripts
     return false
   }
@@ -40,11 +40,12 @@ async function needUpdate() {
 const DURATION = 5000
 function autoRefresh() {
   setTimeout(async () => {
-    if (await needUpdate()) {
-      const result = confirm(
+    const result = await needUpdate()
+    if (result) {
+      const confirmResult = confirm(
         'New updates are available. Do you want to refresh?'
       )
-      if (result) {
+      if (confirmResult) {
         location.reload()
       }
     }

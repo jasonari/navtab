@@ -27,6 +27,6 @@
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "src/auto-refresh.js"
+    "src/auto-update.js"
   ]
 }
