@@ -12,8 +12,8 @@ importers:
         specifier: ^7.0.1
         version: 7.0.1(vue@3.5.17(typescript@5.8.3))
       '@jason-ari/auto-release':
-        specifier: ^1.1.3
-        version: 1.1.3
+        specifier: ^1.2.0
+        version: 1.2.0
       '@tailwindcss/vite':
         specifier: ^4.1.12
         version: 4.1.12(vite@5.4.19(@types/node@20.19.1)(lightningcss@1.30.1)(sass@1.89.2))
@@ -415,8 +415,8 @@ packages:
     resolution: {integrity: sha512-wgm9Ehl2jpeqP3zw/7mo3kRHFp5MEDhqAdwy1fTGkHAwnkGOVsgpvQhL8B5n1qlb01jV3n/bI0ZfZp5lWA1k4w==}
     engines: {node: '>=18.0.0'}
 
-  '@jason-ari/auto-release@1.1.3':
-    resolution: {integrity: sha512-p4EQix+yS6E1jStUE8N9y+u1qOv4UuJxbxeMNoXsPWhBdZ9qDh92RAqHIHuK9B6e8mTEPCM/TOKZsYIWlQrKkQ==}
+  '@jason-ari/auto-release@1.2.0':
+    resolution: {integrity: sha512-c5manf8BeHkEQIX7MDFtM+hnvenYatj62ZuVUCV1thOBBP9ZTVcD4buggCHAbEX00nUc7uoVPPPbgTKs5gU7Hw==}
     hasBin: true
 
   '@jridgewell/gen-mapping@0.3.13':
@@ -2452,7 +2452,7 @@ snapshots:
     dependencies:
       minipass: 7.1.2
 
-  '@jason-ari/auto-release@1.1.3':
+  '@jason-ari/auto-release@1.2.0':
     dependencies:
       chalk: 5.4.1
 

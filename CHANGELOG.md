@@ -1,5 +1,15 @@
 ## Changelog
 
+### [0.6.0](https://github.com/jasonari/navtab/compare/v0.5.0...v0.6.0) (2025-08-30)
+
+#### Features
+
+- auto-refresh
+
+#### Bug Fixes
+
+- modify needUpdate function
+
 ### [0.5.0](https://github.com/jasonari/navtab/compare/v0.4.0...v0.5.0) (2025-06-30)
 
 #### Features
