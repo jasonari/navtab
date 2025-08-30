@@ -1,5 +1,20 @@
+@import 'tailwindcss';
+
 body {
   user-select: none;
-  font-family: ui-sans-serif, -apple-system, system-ui, Segoe UI, Helvetica,
-    Apple Color Emoji, Arial, sans-serif, Segoe UI Emoji, Segoe UI Symbol;
+  font-family:
+    ui-sans-serif,
+    -apple-system,
+    system-ui,
+    Segoe UI,
+    Helvetica,
+    Apple Color Emoji,
+    Arial,
+    sans-serif,
+    Segoe UI Emoji,
+    Segoe UI Symbol;
+}
+
+.flex-center {
+  @apply flex items-center justify-center;
 }
