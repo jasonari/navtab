@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug with pnpm tsx",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["exec", "tsx", "--inspect-brk", "${file}"],
+      "skipFiles": ["<node_internals>/**"],
+      "console": "integratedTerminal"
+    }
+  ]
+}
